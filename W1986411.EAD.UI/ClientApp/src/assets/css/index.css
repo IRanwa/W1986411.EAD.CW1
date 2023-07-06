@@ -69,7 +69,9 @@ body {
 
 .ant-table-tbody .ant-table-cell {
     background-color: var(--light-cream) !important;
-    color: var(--white) !important;
+    color: var(--black) !important;
+    font-size: 1.2em;
+    text-align: center;
 }
 
 .custom-radio-btn {
@@ -414,13 +416,7 @@ body {
 }
 
 .ant-modal-content {
-    background-color: var(--main-color-2) !important;
-}
-
-
-.ant-modal-title {
-    background-color: var(--main-color-2) !important;
-    color: var(--white) !important;
+    background-color: var(--white) !important;
 }
 
 .ant-modal-close {
@@ -535,30 +531,31 @@ body {
 }
 
 .ant-popover-inner {
-    background-color: var( --main-color-2) !important;
+    background-color: var( --main-color) !important;
 }
 
 .ant-popover {
-    border: 1px solid var(--dark-gray-1);
-    --antd-arrow-background-color: var( --dark-gray-1) !important;
+    border: 1px solid var(--main-color);
+    --antd-arrow-background-color: var( --main-color) !important;
     border-radius: 10px;
     padding: 0;
     margin-right: 10px;
 }
 
 .nav-user-dropdown {
-    color: var(--white);
+    color: var(--black);
     max-width: 200px;
 }
 
 
 .nav-user-dropdown-user-name {
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 .nav-user-dropdown-user-email {
     font-size: 12px;
-    color: var(--light-gray-2)
+    color: var(--black)
 }
 
 .nav-header {
@@ -584,4 +581,39 @@ body {
 .form-header {
     font-size: 1.5em;
     font-weight: bold;
+}
+
+.btn-cancel-custom-2 {
+    background-color: var(--dark-red);
+    color: var(--white);
+    margin: 20px 0px;
+    border: 0px;
+}
+
+.btn-cancel-custom-2:hover {
+    background-color: var(--dark-red);
+    color: var(--white) !important;
+}
+
+.color-red{
+    color: var(--dark-red) !important;
+}
+
+.ui-loader{
+    z-index:100000 !important;
+    min-height:100% !important;
+    position:fixed !important;
+    background: var(--light-gray-1);
+}
+
+.color-green {
+    color: var(--dark-green) !important;
+}
+
+.operation-icon{
+    font-size:1.5em;
+}
+
+.color-blue {
+    color: var(--light-blue) !important;
 }

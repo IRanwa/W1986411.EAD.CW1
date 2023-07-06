@@ -144,6 +144,15 @@
   <data name="Message_WorkoutPlanCreatedSuccess" xml:space="preserve">
     <value>Workout plan creation successful.</value>
   </data>
+  <data name="Message_WorkoutPlanRemoveFailed" xml:space="preserve">
+    <value>Workout plan remove failed.</value>
+  </data>
+  <data name="Message_WorkoutPlanRemoveSuccess" xml:space="preserve">
+    <value>Workout plan remove successful.</value>
+  </data>
+  <data name="Message_WorkoutPlanRetrieveFailed" xml:space="preserve">
+    <value>Workout plan retrieve failed.</value>
+  </data>
   <data name="Message_WorkoutPlanUpdatedFailed" xml:space="preserve">
     <value>Workout plan update failed.</value>
   </data>

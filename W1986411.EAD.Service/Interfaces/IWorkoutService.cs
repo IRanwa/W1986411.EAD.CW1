@@ -27,4 +27,18 @@ public interface IWorkoutService
     /// </summary>
     /// <returns>Return workout plans.</returns>
     APIResponse GetWorkoutPlans();
+
+    /// <summary>
+    /// Gets the workout plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns specific workout.</returns>
+    APIResponse GetWorkoutPlanAsync(int planId);
+
+    /// <summary>
+    /// Removes the workout plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns delete status.</returns>
+    Task<APIResponse> RemoveWorkoutPlanAsync(int planId);
 }

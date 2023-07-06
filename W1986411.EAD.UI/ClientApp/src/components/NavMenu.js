@@ -9,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { Layout, Menu, Drawer, Button, Space, Popover, Avatar, Divider } from 'antd';
 import { withRouter } from '../withRouter';
-import { IoPersonOutline } from 'react-icons/io5';
+import { IoPersonOutline, IoBody } from 'react-icons/io5';
 import jwt from 'jwt-decode';
 import { CommonGet } from './Utils/CommonFetch';
 
@@ -115,7 +115,7 @@ class NavMenu extends Component {
                             },
                             {
                                 key: '2',
-                                icon: < LineChartOutlined />,
+                                icon: < IoBody />,
                                 label: 'Workout Plans',
                                 title: '',
                             }
@@ -143,34 +143,34 @@ class NavMenu extends Component {
                                     </div>
                                 </div>
 
-                                <Drawer
-                                    closeIcon={<ArrowLeftOutlined className="nav-drawer-close-icon" />}
-                                    placement="left"
-                                    onClose={this.toggleDrawer}
-                                    open={this.state.drawerOpen}
-                                    className="nav-drawer"
-                                >
-                                    <Menu
-                                        className="header-side-menu-items-drawer"
-                                        mode="inline"
-                                        onClick={this.navigateMenu}
-                                        items={[
-                                            {
-                                                key: '1',
-                                                icon: <PieChartOutlined />,
-                                                label: 'Dashboard',
-                                                title: ''
-                                            },
-                                            {
-                                                key: '2',
-                                                icon: < LineChartOutlined />,
-                                                label: 'Workout Plans',
-                                                title: '',
-                                            }
-                                        ]}
-                                        selectedKeys={[this.state.selectedMenu]}
-                                    />
-                                </Drawer>
+                                {/*<Drawer*/}
+                                {/*    closeIcon={<ArrowLeftOutlined className="nav-drawer-close-icon" />}*/}
+                                {/*    placement="left"*/}
+                                {/*    onClose={this.toggleDrawer}*/}
+                                {/*    open={this.state.drawerOpen}*/}
+                                {/*    className="nav-drawer"*/}
+                                {/*>*/}
+                                {/*    <Menu*/}
+                                {/*        className="header-side-menu-items-drawer"*/}
+                                {/*        mode="inline"*/}
+                                {/*        onClick={this.navigateMenu}*/}
+                                {/*        items={[*/}
+                                {/*            {*/}
+                                {/*                key: '1',*/}
+                                {/*                icon: <PieChartOutlined />,*/}
+                                {/*                label: 'Dashboard',*/}
+                                {/*                title: ''*/}
+                                {/*            },*/}
+                                {/*            {*/}
+                                {/*                key: '2',*/}
+                                {/*                icon: < LineChartOutlined />,*/}
+                                {/*                label: 'Workout Plans',*/}
+                                {/*                title: '',*/}
+                                {/*            }*/}
+                                {/*        ]}*/}
+                                {/*        selectedKeys={[this.state.selectedMenu]}*/}
+                                {/*    />*/}
+                                {/*</Drawer>*/}
                             </div>
 
                             <div className="nav-header">

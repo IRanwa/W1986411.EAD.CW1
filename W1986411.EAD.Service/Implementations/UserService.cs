@@ -114,4 +114,16 @@ public class UserService : IUserService
             );
         return token;
     }
+
+    /// <summary>
+    /// Gets the user by email asynchronous.
+    /// </summary>
+    /// <param name="email">The email.</param>
+    /// <returns>Returns application user.</returns>
+    public async Task<ApplicationUser> GetUserByEmailAsync(string email)
+    {
+        var loginUser = await unitOfWork.GetGenericRepository<ApplicationUser>()
+            .GetOneAsync(userInfo => userInfo.Email == email);
+        return loginUser;
+    }
 }

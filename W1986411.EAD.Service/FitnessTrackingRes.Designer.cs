@@ -142,6 +142,33 @@ namespace W1986411.EAD.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Workout plan remove failed..
+        /// </summary>
+        internal static string Message_WorkoutPlanRemoveFailed {
+            get {
+                return ResourceManager.GetString("Message_WorkoutPlanRemoveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workout plan remove successful..
+        /// </summary>
+        internal static string Message_WorkoutPlanRemoveSuccess {
+            get {
+                return ResourceManager.GetString("Message_WorkoutPlanRemoveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workout plan retrieve failed..
+        /// </summary>
+        internal static string Message_WorkoutPlanRetrieveFailed {
+            get {
+                return ResourceManager.GetString("Message_WorkoutPlanRetrieveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Workout plan update failed..
         /// </summary>
         internal static string Message_WorkoutPlanUpdatedFailed {

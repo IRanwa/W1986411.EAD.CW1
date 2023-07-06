@@ -82,4 +82,44 @@ public class WorkoutController : ControllerBase
             return BadRequest(ex);
         }
     }
+
+    /// <summary>
+    /// Removes the workout plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns response.</returns>
+    [HttpPost]
+    [Route("remove/{planId}")]
+    public async Task<IActionResult> RemoveWorkoutPlanAsync(int planId)
+    {
+        try
+        {
+            var response = await service.RemoveWorkoutPlanAsync(planId);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+    }
+
+    /// <summary>
+    /// Gets the workout plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns response.</returns>
+    [HttpGet]
+    [Route("{planId}")]
+    public IActionResult GetWorkoutPlan(int planId)
+    {
+        try
+        {
+            var response = service.GetWorkoutPlanAsync(planId);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+    }
 }

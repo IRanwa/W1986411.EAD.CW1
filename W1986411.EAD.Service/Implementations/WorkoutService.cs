@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 using System.Security.Principal;
 using W1986411.EAD.Core;
 using W1986411.EAD.Data;
@@ -84,26 +85,13 @@ public class WorkoutService : IWorkoutService
             unitOfWork.GetGenericRepository<WorkoutPlan>().Update(workoutPlan);
             var routines = unitOfWork.GetGenericRepository<WorkoutPlanRoutine>()
                 .GetQueryable(routine => routine.PlanId == model.Id, null).ToList();
+            foreach (var routine in routines)
+                routine.IsActive = false;
             foreach (var routine in model.Routines)
             {
-                if (routine.RoutineId == default)
-                {
-                    var workoutRoutine = mapper.Map<WorkoutPlanRoutine>(routine);
-                    workoutRoutine.PlanId = workoutPlan.Id;
-                    await unitOfWork.GetGenericRepository<WorkoutPlanRoutine>().Add(workoutRoutine);
-                }
-                else
-                {
-                    var currentRoutine = routines.FirstOrDefault(routine => routine.RoutineId == routine.RoutineId);
-                    if(currentRoutine == null)
-                        continue;
-                    currentRoutine.Reps = routine.Reps;
-                    currentRoutine.Sets = routine.Sets;
-                    currentRoutine.BurnCalories = routine.BurnCalories;
-                    currentRoutine.Name = routine.Name;
-                    currentRoutine.IsActive = routine.IsActive;
-                    unitOfWork.GetGenericRepository<WorkoutPlanRoutine>().Update(currentRoutine);
-                }
+                var workoutRoutine = mapper.Map<WorkoutPlanRoutine>(routine);
+                workoutRoutine.PlanId = workoutPlan.Id;
+                await unitOfWork.GetGenericRepository<WorkoutPlanRoutine>().Add(workoutRoutine);
             }
             unitOfWork.SaveChanges();
             return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_WorkoutPlanUpdatedSuccess };
@@ -127,6 +115,44 @@ public class WorkoutService : IWorkoutService
             .ToList();
         foreach (var plan in workoutPlans)
             plan.WorkoutPlanRoutines = plan.WorkoutPlanRoutines.Where(routine => routine.IsActive).ToList();
-        return new APIResponse() { IsSuccess = true, Data = mapper.Map<List<WorkoutPlan>>(workoutPlans) };
+        return new APIResponse() { IsSuccess = true, Data = mapper.Map<List<ViewWorkoutPlanModel>>(workoutPlans) };
+    }
+
+    /// <summary>
+    /// Gets the workout plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns specific workout.</returns>
+    public APIResponse GetWorkoutPlanAsync(int planId)
+    {
+        var workoutPlan = unitOfWork.GetGenericRepository<WorkoutPlan>()
+            .GetQueryable(plan => plan.Id == planId, null)
+            .Include(plan => plan.WorkoutPlanRoutines)
+            .FirstOrDefault();
+        if (workoutPlan == null)
+            return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_WorkoutPlanRetrieveFailed };
+        workoutPlan.WorkoutPlanRoutines = workoutPlan.WorkoutPlanRoutines.Where(routine => routine.IsActive).ToList();
+        return new APIResponse() { IsSuccess = true, Data = mapper.Map<WorkoutPlanModel>(workoutPlan) };
+    }
+
+    /// <summary>
+    /// Removes the workout plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns delete status.</returns>
+    public async Task<APIResponse> RemoveWorkoutPlanAsync(int planId)
+    {
+        var workoutPlan = unitOfWork.GetGenericRepository<WorkoutPlan>()
+            .GetQueryable(plan => plan.Id == planId, null)
+            .Include(plan => plan.WorkoutPlanRoutines)
+            .FirstOrDefault();
+        if (workoutPlan == null)
+            return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_WorkoutPlanRemoveFailed };
+
+        foreach(var routine in workoutPlan.WorkoutPlanRoutines)
+            routine.IsActive = false;
+        workoutPlan.IsActive = false;
+        unitOfWork.SaveChanges();
+        return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_WorkoutPlanRemoveSuccess };
     }
 }
