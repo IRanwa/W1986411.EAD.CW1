@@ -8,7 +8,7 @@ namespace W1986411.EAD.UI;
 /// Workout controller.
 /// </summary>
 /// <seealso cref="ControllerBase" />
-[Route("api/workout")]
+[Route("api/v1/workout")]
 [ApiController]
 public class WorkoutController : ControllerBase
 {

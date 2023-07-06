@@ -2,7 +2,7 @@
 
 namespace W1986411.EAD.UI;
 
-[Route("api/weight")]
+[Route("api/v1/weight")]
 [ApiController]
 public class WeightController : ControllerBase
 {

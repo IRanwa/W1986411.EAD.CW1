@@ -1,0 +1,131 @@
+﻿/*@media only screen and (max-width: 300px) {
+    .header-side-menu {
+        display: none;
+    }
+
+    .symbols-selection-container {
+        display: none;
+    }
+
+    .symbols-selection-container-mobile {
+        display: block;
+    }
+}
+
+
+@media only screen and (min-width: 300px) {
+    .wrapper {
+        margin: 1em !important;
+    }
+
+    .form-field-label {
+        font-size: 1em;
+        font-weight: 700;
+        padding: 5px 0px;
+        display: block;
+    }
+
+    .symbols-selection-container {
+        display: none;
+    }
+
+    .symbols-selection-container-mobile {
+        display: block;
+    }
+
+    .tradingview-widget-container {
+        position: relative;
+        width: calc(100vw - 2em) !important;
+        height: calc(100vh - 230px) !important;
+    }*/
+
+    /*.tradingview-chart {
+        width: calc(100vw - 4em) !important;
+        height: calc(100vh - 230px - 3em) !important;
+        position: absolute;
+    }*/
+
+    /*.header-side-menu {
+        display: none;
+    }
+
+    .header-drawer {
+        display: block !important
+    }
+
+    .main-content-container {
+        width: 100vw !important;
+    }
+
+    .nav-header {
+        display: none !important;
+    }
+}
+
+@media only screen and (min-width: 321px) {
+}
+
+@media only screen and (min-width: 650px) {
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 992px) {
+    .symbols-selection-container {
+        display: block;
+    }
+
+    .symbols-selection-container-mobile {
+        display: none;
+    }
+
+    .main-content-container {
+        max-width: calc(100% - 10.5vw) !important;
+    }
+
+    .header-side-menu {
+        display: block;
+    }
+
+    .header-drawer {
+        display: none !important;
+    }
+
+    .nav-header {
+        display: block !important;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .symbols-selection-container {
+        display: block;
+    }
+
+    .symbols-selection-container-mobile {
+        display: none;
+    }
+
+    .wrapper {
+        margin: 2em 5em !important;
+    }
+
+    .form-field-label {
+        font-size: 1em;
+        font-weight: 700;
+        padding-bottom: 5px;
+        display: block;
+    }
+
+    .tradingview-widget-container {
+        position: relative;
+        width: 100% !important;
+        min-height: 100% !important;
+    }*/
+
+    /*.tradingview-chart {
+        width: calc(100vw - 8em) !important;
+        min-height: 100% !important;
+        position: absolute;
+    }*/
+/*}*/

@@ -63,12 +63,12 @@ public class WorkoutService : IWorkoutService
                 await unitOfWork.GetGenericRepository<WorkoutPlanRoutine>().Add(workoutRoutine);
             }
             unitOfWork.SaveChanges();
-            return new APIResponse() { Status = true, Message = FitnessTrackingRes.Message_WorkoutPlanCreatedSuccess };
+            return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_WorkoutPlanCreatedSuccess };
         }catch (Exception ex)
         {
 
         }
-        return new APIResponse() { Status = false, Message = FitnessTrackingRes.Message_WorkoutPlanCreatedFailed };
+        return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_WorkoutPlanCreatedFailed };
     }
 
     /// <summary>
@@ -106,13 +106,13 @@ public class WorkoutService : IWorkoutService
                 }
             }
             unitOfWork.SaveChanges();
-            return new APIResponse() { Status = true, Message = FitnessTrackingRes.Message_WorkoutPlanUpdatedSuccess };
+            return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_WorkoutPlanUpdatedSuccess };
         }
         catch(Exception ex)
         {
 
         }
-        return new APIResponse() { Status = false, Message = FitnessTrackingRes.Message_WorkoutPlanUpdatedFailed };
+        return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_WorkoutPlanUpdatedFailed };
     }
 
     /// <summary>
@@ -127,6 +127,6 @@ public class WorkoutService : IWorkoutService
             .ToList();
         foreach (var plan in workoutPlans)
             plan.WorkoutPlanRoutines = plan.WorkoutPlanRoutines.Where(routine => routine.IsActive).ToList();
-        return new APIResponse() { Status = true, Data = mapper.Map<List<WorkoutPlan>>(workoutPlans) };
+        return new APIResponse() { IsSuccess = true, Data = mapper.Map<List<WorkoutPlan>>(workoutPlans) };
     }
 }

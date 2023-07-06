@@ -2,7 +2,7 @@
 
 namespace W1986411.EAD.UI;
 
-[Route("api/prediction")]
+[Route("api/v1/prediction")]
 [ApiController]
 public class PredictionController : ControllerBase
 {

@@ -8,7 +8,7 @@ namespace W1986411.EAD.UI;
 /// User controller.
 /// </summary>
 /// <seealso cref="ControllerBase" />
-[Route("api/user")]
+[Route("api/v1/user")]
 [ApiController]
 public class UserController : ControllerBase
 {

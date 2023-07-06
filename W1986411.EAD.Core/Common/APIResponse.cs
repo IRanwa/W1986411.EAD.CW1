@@ -6,9 +6,9 @@
 public class APIResponse
 {
     /// <summary>
-    /// Gets or sets a value indicating whether this <see cref="APIResponse"/> is status.
+    /// Gets or sets a value indicating whether this instance is success.
     /// </summary>
-    public bool Status { get; set; }
+    public bool IsSuccess { get; set; }
 
     /// <summary>
     /// Gets or sets the message.

@@ -8,7 +8,7 @@ namespace W1986411.EAD.UI;
 /// Cheat meal controller.
 /// </summary>
 /// <seealso cref="ControllerBase" />
-[Route("api/cheatmeal")]
+[Route("api/v1/cheatmeal")]
 [ApiController]
 public class CheatMealController : ControllerBase
 {

@@ -8,6 +8,7 @@ using System.Security.Principal;
 using System.Text;
 using W1986411.EAD.Data;
 using W1986411.EAD.Service;
+using W1986411.EAD.UI;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
@@ -84,6 +85,8 @@ services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fitness Tracking", Version = "v1" });
 });
 
+//Seed Data
+DBConfiguration.SeedData(services.BuildServiceProvider());
 
 var app = builder.Build();
 

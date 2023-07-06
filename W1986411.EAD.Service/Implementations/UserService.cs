@@ -64,11 +64,12 @@ public class UserService : IUserService
     public async Task<APIResponse> RegisterUserAsync(InsertUpdateUserModel model)
     {
         var user = mapper.Map<ApplicationUser>(model);
+        user.Id = Guid.NewGuid().ToString();
         user.UserName = model.Email;
         var identityResult = await userManager.CreateAsync(user, model.Password);
         if (identityResult.Succeeded)
-            return new APIResponse() { Status = true, Message =  FitnessTrackingRes.Message_UserRegistrationSuccess };
-        return new APIResponse() { Status = false, Message = FitnessTrackingRes.Message_UserRegistrationFailed };
+            return new APIResponse() { IsSuccess = true, Message =  FitnessTrackingRes.Message_UserRegistrationSuccess };
+        return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_UserRegistrationFailed };
     }
 
     /// <summary>
@@ -81,10 +82,10 @@ public class UserService : IUserService
         var loginUser = await unitOfWork.GetGenericRepository<ApplicationUser>()
             .GetOneAsync(userInfo => userInfo.Email == model.Email);
         if(loginUser == null)
-            return new APIResponse() { Status = false, Message = FitnessTrackingRes.Message_UserLoginCredentialsInvalid };
+            return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_UserLoginCredentialsInvalid };
         var loginStatus = await userManager.CheckPasswordAsync(loginUser, model.Password);
         if(!loginStatus)
-            return new APIResponse() { Status = false, Message = FitnessTrackingRes.Message_UserLoginCredentialsInvalid };
+            return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_UserLoginCredentialsInvalid };
         var authClaims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, $"{loginUser.FirstName} {loginUser.LastName}"),
@@ -92,7 +93,7 @@ public class UserService : IUserService
                     new Claim(ClaimTypes.Email, loginUser.Email)
                 };
         var token = GetToken(authClaims);
-        return new APIResponse() { Status = true, Data = new JwtSecurityTokenHandler().WriteToken(token) };
+        return new APIResponse() { IsSuccess = true, Data = new JwtSecurityTokenHandler().WriteToken(token) };
     }
 
     /// <summary>

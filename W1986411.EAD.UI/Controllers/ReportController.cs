@@ -2,7 +2,7 @@
 
 namespace W1986411.EAD.UI;
 
-[Route("api/report")]
+[Route("api/v1/report")]
 [ApiController]
 public class ReportController : ControllerBase
 {

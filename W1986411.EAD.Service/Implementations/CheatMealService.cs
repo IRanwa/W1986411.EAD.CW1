@@ -63,13 +63,13 @@ public class CheatMealService : ICheatMealService
                 await unitOfWork.GetGenericRepository<CheatMealPlanFood>().Add(cheatMealPlanFood);
             }
             unitOfWork.SaveChanges();
-            return new APIResponse() { Status = true, Message = FitnessTrackingRes.Message_CheatMealPlanCreatedSuccess};
+            return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_CheatMealPlanCreatedSuccess};
         }
         catch (Exception ex)
         {
 
         }
-        return new APIResponse() { Status = false, Message = FitnessTrackingRes.Message_CheatMealPlanCreatedFailed };
+        return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_CheatMealPlanCreatedFailed };
     }
 
     /// <summary>
@@ -105,13 +105,13 @@ public class CheatMealService : ICheatMealService
                 }
             }
             unitOfWork.SaveChanges();
-            return new APIResponse() { Status = true, Message = FitnessTrackingRes.Message_CheatMealPlanUpdatedSuccess };
+            return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_CheatMealPlanUpdatedSuccess };
         }
         catch (Exception ex)
         {
 
         }
-        return new APIResponse() { Status = false, Message = FitnessTrackingRes.Message_CheatMealPlanUpdatedFailed };
+        return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_CheatMealPlanUpdatedFailed };
     }
 
     /// <summary>
@@ -126,6 +126,6 @@ public class CheatMealService : ICheatMealService
             .ToList();
         foreach (var plan in cheatMealPlans)
             plan.CheatMealPlanFoods = plan.CheatMealPlanFoods.Where(food => food.IsActive).ToList();
-        return new APIResponse() { Status = true, Data = mapper.Map<List<CheatMealPlan>>(cheatMealPlans) };
+        return new APIResponse() { IsSuccess = true, Data = mapper.Map<List<CheatMealPlan>>(cheatMealPlans) };
     }
 }
