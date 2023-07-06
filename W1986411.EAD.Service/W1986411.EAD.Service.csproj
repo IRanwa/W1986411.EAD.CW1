@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.31.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.10.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\W1986411.EAD.Core\W1986411.EAD.Core.csproj" />
+    <ProjectReference Include="..\W1986411.EAD.Data\W1986411.EAD.Data.csproj" />
+    <ProjectReference Include="..\W1986411.EAD.Model\W1986411.EAD.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="FitnessTrackingRes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FitnessTrackingRes.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="FitnessTrackingRes.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>FitnessTrackingRes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
