@@ -4,6 +4,7 @@ import { Layout } from "./components/Layout";
 import LoginRegistration from "./components/LoginRegistration";
 import Unauthorize from "./components/Utils/Unauthorize";
 import WorkoutPlans from "./components/WorkoutPlans";
+import Dashboard from "./components/Dashboard";
 
 const AppRoutes = [
     {
@@ -12,7 +13,7 @@ const AppRoutes = [
     },
     {
         path: '/dashboard',
-        element: <Unauthorize><Layout><Home /></Layout></Unauthorize>
+        element: <Unauthorize><Layout><Dashboard /></Layout></Unauthorize>
     },
     {
         path: '/workout-plans',

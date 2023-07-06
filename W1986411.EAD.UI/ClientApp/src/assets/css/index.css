@@ -622,3 +622,15 @@ body {
     background: var(--orange);
     color: var(--white)
 }
+
+.btn-custom-3 {
+    background-color: var(--light-blue);
+    color: var(--white);
+    margin: 20px 0px;
+    border: 0px;
+}
+
+.btn-custom-3:hover {
+    background-color: var(--light-blue-2);
+    color: var(--white) !important;
+}

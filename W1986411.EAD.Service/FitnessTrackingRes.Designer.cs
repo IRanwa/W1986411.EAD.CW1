@@ -151,6 +151,15 @@ namespace W1986411.EAD.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User weight record updated..
+        /// </summary>
+        internal static string Message_UserWeightRecordUpdated {
+            get {
+                return ResourceManager.GetString("Message_UserWeightRecordUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Workout plan creation failed..
         /// </summary>
         internal static string Message_WorkoutPlanCreatedFailed {

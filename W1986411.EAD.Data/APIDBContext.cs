@@ -22,4 +22,5 @@ public class APIDBContext : IdentityDbContext<ApplicationUser>
     public DbSet<WorkoutPlanRoutine> WorkoutPlanRoutines { get; set; }
     public DbSet<CheatMealPlan> CheatMealPlans { get; set; }
     public DbSet<CheatMealPlanFood> CheatMealPlanFoods { get; set; }
+    public DbSet<UserFitnessDetail> UserWeights { get; set; }
 }

@@ -76,6 +76,7 @@ var mapper = new MapperConfiguration(cfg =>
     cfg.AddProfile(new UserProfile());
     cfg.AddProfile(new WorkoutProfile());
     cfg.AddProfile(new CheatMealProfile());
+    cfg.AddProfile(new FitnessProfile());
 });
 services.AddSingleton(mapper.CreateMapper());
 

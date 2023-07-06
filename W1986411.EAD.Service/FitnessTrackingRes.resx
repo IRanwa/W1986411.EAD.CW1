@@ -147,6 +147,9 @@
   <data name="Message_UserRegistrationSuccess" xml:space="preserve">
     <value>User registration successful.</value>
   </data>
+  <data name="Message_UserWeightRecordUpdated" xml:space="preserve">
+    <value>User weight record updated.</value>
+  </data>
   <data name="Message_WorkoutPlanCreatedFailed" xml:space="preserve">
     <value>Workout plan creation failed.</value>
   </data>

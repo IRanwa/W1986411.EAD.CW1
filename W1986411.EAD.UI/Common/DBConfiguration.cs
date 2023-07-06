@@ -49,8 +49,8 @@ public static class DBConfiguration
         {
             WorkoutName = "Test Plan 1",
             IsActive = true,
-            StartDate = new DateTime(2023, 4, 01),
-            EndDate = new DateTime(2023, 4, 30),
+            StartDate = new DateTime(2023, 6, 01),
+            EndDate = new DateTime(2023, 7, 04),
             OccurrenceType = OccurrenceTypes.Recurring,
             Routines = new List<InsertUpdateWorkoutRoutineModel>()
             {
@@ -76,8 +76,8 @@ public static class DBConfiguration
         {
             WorkoutName = "Test Plan 2",
             IsActive = true,
-            StartDate = new DateTime(2023, 4, 15),
-            EndDate = new DateTime(2023, 4, 15),
+            StartDate = new DateTime(2023, 7, 04),
+            EndDate = new DateTime(2023, 7, 04),
             OccurrenceType = OccurrenceTypes.OneTime,
             Routines = new List<InsertUpdateWorkoutRoutineModel>()
             {
@@ -104,8 +104,8 @@ public static class DBConfiguration
         cheatMealService.InsertCheatMealPlanAsync(new InsertUpdateCheatMealModel()
         {
             CheatMealName = "Meal 1",
-            StartDate = new DateTime(2023,04,01),
-            EndDate = new DateTime(2023, 04, 01),
+            StartDate = new DateTime(2023, 7, 04),
+            EndDate = new DateTime(2023, 7, 04),
             OccurrenceType = OccurrenceTypes.OneTime,
             IsActive = true,
             Foods = new List<InsertUpdateCheatMealFoodModel>()
@@ -127,8 +127,8 @@ public static class DBConfiguration
         cheatMealService.InsertCheatMealPlanAsync(new InsertUpdateCheatMealModel()
         {
             CheatMealName = "Meal 2",
-            StartDate = new DateTime(2023, 04, 01),
-            EndDate = new DateTime(2023, 04, 15),
+            StartDate = new DateTime(2023, 6, 01),
+            EndDate = new DateTime(2023, 7, 04),
             OccurrenceType = OccurrenceTypes.Recurring,
             IsActive = true,
             Foods = new List<InsertUpdateCheatMealFoodModel>()

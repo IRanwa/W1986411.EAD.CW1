@@ -237,11 +237,11 @@ class WorkoutPlan extends Component {
         ];
         let title = this.state.planId == null ? "Create Workout Plan" : "Update Workout Plan";
         let footerBtns = [
-            <Button className="btn-cancel-custom-2" onClick={() => this.createWorkoutPlanModal(false)}>Cancel</Button>
+            <Button key="1" className="btn-cancel-custom-2" onClick={() => this.createWorkoutPlanModal(false)}>Cancel</Button>
         ];
         this.state.planId == null ?
-            footerBtns.push(<Button className="btn-custom-2" onClick={this.submitWorkoutPlan}>Submit</Button>) :
-            footerBtns.push(<Button className="btn-custom-2" onClick={this.updateWorkoutPlan}>Submit</Button>);
+            footerBtns.push(<Button key="2" className="btn-custom-2" onClick={this.submitWorkoutPlan}>Submit</Button>) :
+            footerBtns.push(<Button key="3" className="btn-custom-2" onClick={this.updateWorkoutPlan}>Submit</Button>);
         return (
             <Modal
                 title={title}
@@ -423,8 +423,8 @@ class WorkoutPlan extends Component {
 
     rendeRemoveModel = () => {
         let footerBtns = [
-            <Button className="btn-cancel-custom-2" onClick={() => this.workoutPlanRemoveModel(null, false)}>Cancel</Button>,
-            <Button className="btn-custom-2" onClick={() => this.removeWorkoutPlan()}>Remove</Button>,
+            <Button key="1" className="btn-cancel-custom-2" onClick={() => this.workoutPlanRemoveModel(null, false)}>Cancel</Button>,
+            <Button key="2" className="btn-custom-2" onClick={() => this.removeWorkoutPlan()}>Remove</Button>,
         ];
         return (
             <Modal
