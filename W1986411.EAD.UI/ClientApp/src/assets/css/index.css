@@ -617,3 +617,8 @@ body {
 .color-blue {
     color: var(--light-blue) !important;
 }
+
+.profile-icon {
+    background: var(--orange);
+    color: var(--white)
+}

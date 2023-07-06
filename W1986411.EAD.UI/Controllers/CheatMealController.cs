@@ -83,4 +83,44 @@ public class CheatMealController : ControllerBase
             return BadRequest(ex);
         }
     }
+
+    /// <summary>
+    /// Removes the cheat meal plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Return response.</returns>
+    [HttpPost]
+    [Route("remove/{planId}")]
+    public async Task<IActionResult> RemoveCheatMealPlanAsync(int planId)
+    {
+        try
+        {
+            var response = await service.RemoveCheatMealPlanAsync(planId);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+    }
+
+    /// <summary>
+    /// Gets the cheat meal plan.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns response.</returns>
+    [HttpGet]
+    [Route("{planId}")]
+    public IActionResult GetCheatMealPlan(int planId)
+    {
+        try
+        {
+            var response = service.GetCheatMealPlanAsync(planId);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex);
+        }
+    }
 }

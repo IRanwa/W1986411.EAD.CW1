@@ -123,6 +123,15 @@
   <data name="Message_CheatMealPlanCreatedSuccess" xml:space="preserve">
     <value>Cheat meal plan creation successful.</value>
   </data>
+  <data name="Message_CheatMealPlanRemoveFailed" xml:space="preserve">
+    <value>Cheat meal plan remove failed.</value>
+  </data>
+  <data name="Message_CheatMealPlanRemoveSuccess" xml:space="preserve">
+    <value>Cheat meal plan remove successful.</value>
+  </data>
+  <data name="Message_CheatMealPlanRetrieveFailed" xml:space="preserve">
+    <value>Cheat meal plan retrieve failed.</value>
+  </data>
   <data name="Message_CheatMealPlanUpdatedFailed" xml:space="preserve">
     <value>Cheat meal plan update failed.</value>
   </data>

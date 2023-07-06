@@ -1,3 +1,4 @@
+import CheatMealPlan from "./components/CheatMealPlan";
 import { Home } from "./components/Home";
 import { Layout } from "./components/Layout";
 import LoginRegistration from "./components/LoginRegistration";
@@ -16,6 +17,10 @@ const AppRoutes = [
     {
         path: '/workout-plans',
         element: <Unauthorize><Layout><WorkoutPlans /></Layout></Unauthorize>
+    },
+    {
+        path: '/cheatmeal-plans',
+        element: <Unauthorize><Layout><CheatMealPlan /></Layout></Unauthorize>
     }
 ];
 

@@ -79,6 +79,33 @@ namespace W1986411.EAD.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cheat meal plan remove failed..
+        /// </summary>
+        internal static string Message_CheatMealPlanRemoveFailed {
+            get {
+                return ResourceManager.GetString("Message_CheatMealPlanRemoveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cheat meal plan remove successful..
+        /// </summary>
+        internal static string Message_CheatMealPlanRemoveSuccess {
+            get {
+                return ResourceManager.GetString("Message_CheatMealPlanRemoveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cheat meal plan retrieve failed..
+        /// </summary>
+        internal static string Message_CheatMealPlanRetrieveFailed {
+            get {
+                return ResourceManager.GetString("Message_CheatMealPlanRetrieveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cheat meal plan update failed..
         /// </summary>
         internal static string Message_CheatMealPlanUpdatedFailed {

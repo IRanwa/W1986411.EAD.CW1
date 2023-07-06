@@ -5,11 +5,12 @@ import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     LineChartOutlined,
-    PieChartOutlined
+    PieChartOutlined,
+    UserOutlined
 } from '@ant-design/icons';
 import { Layout, Menu, Drawer, Button, Space, Popover, Avatar, Divider } from 'antd';
 import { withRouter } from '../withRouter';
-import { IoPersonOutline, IoBody } from 'react-icons/io5';
+import { IoPersonOutline, IoBody, IoFastFood, IoPulse } from 'react-icons/io5';
 import jwt from 'jwt-decode';
 import { CommonGet } from './Utils/CommonFetch';
 
@@ -24,7 +25,7 @@ class NavMenu extends Component {
         this.toggleNavbar = this.toggleNavbar.bind(this);
         this.state = {
             collapsed: false,
-            selectedMenu: '1',
+            selectedMenu: 'dashboard',
             drawerOpen: false,
             email: '',
             userFullName: ''
@@ -34,7 +35,11 @@ class NavMenu extends Component {
     componentDidMount() {
         if (window.location.pathname === "/workout-plans") {
             this.setState({
-                selectedMenu: '2'
+                selectedMenu: 'workout'
+            })
+        } else if (window.location.pathname === "/cheatmeal-plans") {
+            this.setState({
+                selectedMenu: 'cheatmeal'
             })
         }
 
@@ -59,10 +64,12 @@ class NavMenu extends Component {
     }
 
     navigateMenu = (value) => {
-        if (value.key === "1") {
-            this.props.navigate('/historical');
-        } else {
+        if (value.key === "dashboard") {
+            this.props.navigate('/dashboard');
+        } else if (value.key === "workout") {
             this.props.navigate('/workout-plans');
+        } else if (value.key === "cheatmeal") {
+            this.props.navigate('/cheatmeal-plans');
         }
         this.setState({
             selectedMenu: value.key
@@ -108,17 +115,29 @@ class NavMenu extends Component {
                         onClick={this.navigateMenu}
                         items={[
                             {
-                                key: '1',
+                                key: 'dashboard',
                                 icon: <PieChartOutlined />,
                                 label: 'Dashboard',
                                 title: ''
                             },
                             {
-                                key: '2',
-                                icon: < IoBody />,
+                                key: 'workout',
+                                icon: < IoPulse />,
                                 label: 'Workout Plans',
                                 title: '',
-                            }
+                            },
+                            {
+                                key: 'cheatmeal',
+                                icon: < IoFastFood />,
+                                label: 'Cheat Meal Plans',
+                                title: '',
+                            },
+                            {
+                                key: 'weight',
+                                icon: < IoBody />,
+                                label: 'Weight Management',
+                                title: '',
+                            },
                         ]}
                         selectedKeys={[this.state.selectedMenu]}
                     />
@@ -127,57 +146,11 @@ class NavMenu extends Component {
                 <Layout>
                     <Header className="site-header-nav">
                         <div>
-                            <div className="header-drawer">
-                                <div
-                                    className=" d-flex flex-row ">
-                                    <div align="left" className="side-menu-collapse-icon-mobile flex-grow-1">
-                                        <MenuOutlined onClick={this.toggleDrawer} />
-                                    </div>
-                                    <div className="flex-grow-1">
-                                        <div
-                                            className="nav-user-container" align="right" >
-                                            <Popover overlayClassName="nav-user-popup-container" placement="bottom" content={userIconContent} >
-                                                <Avatar size={30} className="white-bg-color" icon={<IoPersonOutline />} />
-                                            </Popover>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/*<Drawer*/}
-                                {/*    closeIcon={<ArrowLeftOutlined className="nav-drawer-close-icon" />}*/}
-                                {/*    placement="left"*/}
-                                {/*    onClose={this.toggleDrawer}*/}
-                                {/*    open={this.state.drawerOpen}*/}
-                                {/*    className="nav-drawer"*/}
-                                {/*>*/}
-                                {/*    <Menu*/}
-                                {/*        className="header-side-menu-items-drawer"*/}
-                                {/*        mode="inline"*/}
-                                {/*        onClick={this.navigateMenu}*/}
-                                {/*        items={[*/}
-                                {/*            {*/}
-                                {/*                key: '1',*/}
-                                {/*                icon: <PieChartOutlined />,*/}
-                                {/*                label: 'Dashboard',*/}
-                                {/*                title: ''*/}
-                                {/*            },*/}
-                                {/*            {*/}
-                                {/*                key: '2',*/}
-                                {/*                icon: < LineChartOutlined />,*/}
-                                {/*                label: 'Workout Plans',*/}
-                                {/*                title: '',*/}
-                                {/*            }*/}
-                                {/*        ]}*/}
-                                {/*        selectedKeys={[this.state.selectedMenu]}*/}
-                                {/*    />*/}
-                                {/*</Drawer>*/}
-                            </div>
-
                             <div className="nav-header">
                                 <div
                                     className="nav-user-container" align="right" >
                                     <Popover overlayClassName="nav-user-popup-container" placement="bottom" content={userIconContent} >
-                                        <Avatar size={30} className="white-bg-color" icon={<IoPersonOutline />} />
+                                        <Avatar className="profile-icon" icon={<UserOutlined />} />
                                     </Popover>
                                 </div>
                             </div>

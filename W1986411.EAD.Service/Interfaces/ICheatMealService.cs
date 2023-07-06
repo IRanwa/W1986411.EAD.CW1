@@ -27,4 +27,18 @@ public interface ICheatMealService
     /// </summary>
     /// <returns>Returns list of cheat meal plans.</returns>
     APIResponse GetCheatMealPlans();
+
+    /// <summary>
+    /// Gets the cheat meal plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns cheat meal plan.</returns>
+    APIResponse GetCheatMealPlanAsync(int planId);
+
+    /// <summary>
+    /// Removes the cheat meal plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns remove status.</returns>
+    Task<APIResponse> RemoveCheatMealPlanAsync(int planId);
 }

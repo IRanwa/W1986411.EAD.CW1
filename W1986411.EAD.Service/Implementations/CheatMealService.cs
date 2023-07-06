@@ -85,24 +85,13 @@ public class CheatMealService : ICheatMealService
             unitOfWork.GetGenericRepository<CheatMealPlan>().Update(cheatMealPlan);
             var foods = unitOfWork.GetGenericRepository<CheatMealPlanFood>()
                 .GetQueryable(food => food.PlanId == model.Id, null).ToList();
+            foreach (var food in foods)
+                food.IsActive = false;
             foreach (var food in model.Foods)
             {
-                if (food.FoodId == default)
-                {
-                    var cheatMealPlanFood = mapper.Map<CheatMealPlanFood>(food);
-                    cheatMealPlanFood.PlanId = cheatMealPlan.Id;
-                    await unitOfWork.GetGenericRepository<CheatMealPlanFood>().Add(cheatMealPlanFood);
-                }
-                else
-                {
-                    var currentFood = foods.FirstOrDefault(cheatMealFood => cheatMealFood.FoodId == food.FoodId);
-                    if (currentFood == null)
-                        continue;
-                    currentFood.CaloriesGain = food.CaloriesGain;
-                    currentFood.Name = food.Name;
-                    currentFood.IsActive = food.IsActive;
-                    unitOfWork.GetGenericRepository<CheatMealPlanFood>().Update(currentFood);
-                }
+                var cheatMealPlanFood = mapper.Map<CheatMealPlanFood>(food);
+                cheatMealPlanFood.PlanId = cheatMealPlan.Id;
+                await unitOfWork.GetGenericRepository<CheatMealPlanFood>().Add(cheatMealPlanFood);
             }
             unitOfWork.SaveChanges();
             return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_CheatMealPlanUpdatedSuccess };
@@ -126,6 +115,44 @@ public class CheatMealService : ICheatMealService
             .ToList();
         foreach (var plan in cheatMealPlans)
             plan.CheatMealPlanFoods = plan.CheatMealPlanFoods.Where(food => food.IsActive).ToList();
-        return new APIResponse() { IsSuccess = true, Data = mapper.Map<List<CheatMealPlan>>(cheatMealPlans) };
+        return new APIResponse() { IsSuccess = true, Data = mapper.Map<List<ViewCheatMealPlanModel>>(cheatMealPlans) };
+    }
+
+    /// <summary>
+    /// Gets the cheat meal plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns cheat meal plan.</returns>
+    public APIResponse GetCheatMealPlanAsync(int planId)
+    {
+        var cheatMealPlan = unitOfWork.GetGenericRepository<CheatMealPlan>()
+            .GetQueryable(plan => plan.Id == planId, null)
+            .Include(plan => plan.CheatMealPlanFoods)
+            .FirstOrDefault();
+        if (cheatMealPlan == null)
+            return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_CheatMealPlanRetrieveFailed };
+        cheatMealPlan.CheatMealPlanFoods = cheatMealPlan.CheatMealPlanFoods.Where(food => food.IsActive).ToList();
+        return new APIResponse() { IsSuccess = true, Data = mapper.Map<CheatMealPlanModel>(cheatMealPlan) };
+    }
+
+    /// <summary>
+    /// Removes the cheat meal plan asynchronous.
+    /// </summary>
+    /// <param name="planId">The plan identifier.</param>
+    /// <returns>Returns remove status.</returns>
+    public async Task<APIResponse> RemoveCheatMealPlanAsync(int planId)
+    {
+        var cheatMealPlan = unitOfWork.GetGenericRepository<CheatMealPlan>()
+            .GetQueryable(plan => plan.Id == planId, null)
+            .Include(plan => plan.CheatMealPlanFoods)
+            .FirstOrDefault();
+        if (cheatMealPlan == null)
+            return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_CheatMealPlanRemoveFailed };
+
+        foreach (var food in cheatMealPlan.CheatMealPlanFoods)
+            food.IsActive = false;
+        cheatMealPlan.IsActive = false;
+        unitOfWork.SaveChanges();
+        return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_CheatMealPlanRemoveSuccess };
     }
 }

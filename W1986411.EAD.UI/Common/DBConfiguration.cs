@@ -42,6 +42,7 @@ public static class DBConfiguration
         };
 
         var workoutService = provider.GetRequiredService<IWorkoutService>();
+        var cheatMealService = provider.GetRequiredService<ICheatMealService>();
 
         //Create Workout Plans
         workoutService.InsertWorkoutPlanAsync(new InsertUpdateWorkoutModel()
@@ -100,5 +101,45 @@ public static class DBConfiguration
         });
 
         //Create Cheat Meal Plans
+        cheatMealService.InsertCheatMealPlanAsync(new InsertUpdateCheatMealModel()
+        {
+            CheatMealName = "Meal 1",
+            StartDate = new DateTime(2023,04,01),
+            EndDate = new DateTime(2023, 04, 01),
+            OccurrenceType = OccurrenceTypes.OneTime,
+            IsActive = true,
+            Foods = new List<InsertUpdateCheatMealFoodModel>()
+            {
+                new InsertUpdateCheatMealFoodModel()
+                {
+                    CaloriesGain = 400,
+                    IsActive = true,
+                    Name = "Meal 1 - Food 1"
+                },
+                new InsertUpdateCheatMealFoodModel()
+                {
+                    CaloriesGain = 300,
+                    IsActive = true,
+                    Name = "Meal 1 - Food 2"
+                }
+            }
+        });
+        cheatMealService.InsertCheatMealPlanAsync(new InsertUpdateCheatMealModel()
+        {
+            CheatMealName = "Meal 2",
+            StartDate = new DateTime(2023, 04, 01),
+            EndDate = new DateTime(2023, 04, 15),
+            OccurrenceType = OccurrenceTypes.Recurring,
+            IsActive = true,
+            Foods = new List<InsertUpdateCheatMealFoodModel>()
+            {
+                new InsertUpdateCheatMealFoodModel()
+                {
+                    CaloriesGain = 900,
+                    IsActive = true,
+                    Name = "Meal 2 - Food 1"
+                }
+            }
+        });
     }
 }
