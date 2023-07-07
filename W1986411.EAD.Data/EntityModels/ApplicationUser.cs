@@ -27,9 +27,4 @@ public class ApplicationUser : IdentityUser
     /// Gets or sets a value indicating whether this instance is active.
     /// </summary>
     public bool IsActive { get; set; }
-
-    /// <summary>
-    /// Gets or sets the height.
-    /// </summary>
-    public double Height { get; set; }
 }
