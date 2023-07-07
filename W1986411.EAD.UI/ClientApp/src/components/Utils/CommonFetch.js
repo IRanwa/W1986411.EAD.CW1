@@ -22,7 +22,6 @@ export const CommonPost = (url, parameters, formData) => {
         request.setRequestHeader("Access-Control-Allow-Origin", '*');
         request.setRequestHeader("Accept-Language", "en-US");
         request.onload = () => {
-            console.log("request ", request.status)
             if (request.status === 401) {
                 localStorage.setItem("token", null);
                 //InformAuthenticatedChange();
@@ -63,7 +62,6 @@ export const CommonGet = (url, parameters) => {
         request.setRequestHeader("Access-Control-Allow-Origin", '*');
         request.setRequestHeader("Accept-Language", "en-US");
         request.onload = () => {
-            console.log("request ", request.status)
             if (request.status === 401) {
                 localStorage.setItem("token", null);
                 //InformAuthenticatedChange();

@@ -426,7 +426,6 @@ class CheatMealPlan extends Component {
             .then(res => {
                 if (res.isSuccess) {
                     let data = res.data;
-                    console.log("data ", data)
                     let cheatMealFoods = [];
                     for (let food of data.cheatMealPlanFoods) {
                         let key = cheatMealFoods.length == 0 ? 1 : cheatMealFoods[cheatMealFoods.length - 1].key +1;

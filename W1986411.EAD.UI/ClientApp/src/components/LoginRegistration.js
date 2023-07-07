@@ -172,7 +172,6 @@ class LoginRegistration extends Component {
         };
         CommonPost("api/v1/user", null, data)
             .then(res => {
-                console.log('res ',res)
                 if (res.isSuccess) {
                     if (res.data != null) {
                         const token = res.data;

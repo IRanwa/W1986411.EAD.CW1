@@ -151,7 +151,6 @@ class Dashboard extends Component {
         });
         CommonPost("/api/v1/user-fitness/by-date", null, { recordDate: this.state.fitnessSelectedDate })
             .then(res => {
-                console.log(res)
                 if (res.isSuccess) {
                     let data = res.data;
                     this.setState({
@@ -208,7 +207,6 @@ class Dashboard extends Component {
         };
         CommonPost("/api/v1/user-fitness", null, data)
             .then(res => {
-                console.log(res)
                 if (res.isSuccess) {
                     openNotification(NotificationStatusTypes.Success, res.message);
                 } else {
@@ -240,7 +238,6 @@ class Dashboard extends Component {
         };
         CommonPost("/api/v1/user-fitness/delete", null, data)
             .then(res => {
-                console.log("res ", res)
                 if (res.isSuccess) {
                     openNotification(NotificationStatusTypes.Success, res.message);
                 } else {
@@ -256,7 +253,6 @@ class Dashboard extends Component {
                 });
                 this.getFitnessDetailsForPeriod();
             }).catch(err => {
-                console.log("err ",err)
                 this.setState({
                     screenLoading: false
                 });

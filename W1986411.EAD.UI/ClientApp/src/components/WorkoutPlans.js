@@ -114,10 +114,12 @@ class WorkoutPlan extends Component {
     popupWorkoutPlanRender = () => {
         const occurrenceOptions = [
             {
+                key:"1",
                 value: OccurrenceTypes.OneTime,
                 label: "One Time"
             },
             {
+                key: "2",
                 value: OccurrenceTypes.Recurring,
                 label: "Recurring"
             }
@@ -309,14 +311,17 @@ class WorkoutPlan extends Component {
             return;
         }
         let routines = [];
+        let index = 1;
         for (let routine of this.state.workoutRoutines) {
             routines.push({
+                key: index,
                 "name": routine.name,
                 "sets": routine.sets,
                 "reps": routine.reps,
                 "burnCalories": routine.caloriesBurn,
                 "isActive": true
             })
+            index += 1;
         }
         let data = {
             "workoutName": this.state.planName,
@@ -528,14 +533,17 @@ class WorkoutPlan extends Component {
             return;
         }
         let routines = [];
+        let index = 1;
         for (let routine of this.state.workoutRoutines) {
             routines.push({
+                "key": index,
                 "name": routine.name,
                 "sets": routine.sets,
                 "reps": routine.reps,
                 "burnCalories": routine.caloriesBurn,
                 "isActive": true
             })
+            index += 1;
         }
         let data = {
             "Id": this.state.planId, 
