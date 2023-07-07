@@ -28,9 +28,11 @@ public class UnitOfWork : IUnitOfWork
     /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
     /// </summary>
     /// <param name="context">The context.</param>
-    public UnitOfWork(APIDBContext context)
+    /// <param name="user">The user.</param>
+    public UnitOfWork(APIDBContext context, IPrincipal user)
     {
         this.context = context;
+        this.user = user;
     }
 
     /// <summary>
@@ -54,24 +56,24 @@ public class UnitOfWork : IUnitOfWork
     /// <returns>Returns saved count.</returns>
     public int SaveChanges()
     {
-        //var addingEntries = context.ChangeTracker.Entries().Where(entry =>
-        //    entry.Entity is EntityBase &&
-        //    entry.State == EntityState.Added).ToList();
-        //foreach (var entry in addingEntries)
-        //{
-        //    ((EntityBase)entry.Entity).CreatedDateTime = DateTime.UtcNow;
-        //    ((EntityBase)entry.Entity).CreatedUser = user.Identity == null ? null : user.Identity?.Name;
-        //}
+        var addingEntries = context.ChangeTracker.Entries().Where(entry =>
+            entry.Entity is EntityBase &&
+            entry.State == EntityState.Added).ToList();
+        foreach (var entry in addingEntries)
+        {
+            ((EntityBase)entry.Entity).CreatedDateTime = DateTime.UtcNow;
+            ((EntityBase)entry.Entity).CreatedUser = user.Identity == null ? null : user.Identity?.Name;
+        }
 
-        //var updatingEntries = context.ChangeTracker.Entries().Where(entry =>
-        //    entry.Entity is EntityBase &&
-        //    entry.State == EntityState.Modified ||
-        //    entry.State == EntityState.Deleted).ToList();
-        //foreach (var entry in updatingEntries)
-        //{
-        //    ((EntityBase)entry.Entity).ModifiedDateTime = DateTime.UtcNow;
-        //    ((EntityBase)entry.Entity).ModifiedUser = user.Identity == null ? null : user.Identity?.Name;
-        //}
+        var updatingEntries = context.ChangeTracker.Entries().Where(entry =>
+            entry.Entity is EntityBase &&
+            entry.State == EntityState.Modified ||
+            entry.State == EntityState.Deleted).ToList();
+        foreach (var entry in updatingEntries)
+        {
+            ((EntityBase)entry.Entity).ModifiedDateTime = DateTime.UtcNow;
+            ((EntityBase)entry.Entity).ModifiedUser = user.Identity == null ? null : user.Identity?.Name;
+        }
         return context.SaveChanges();
     }
 

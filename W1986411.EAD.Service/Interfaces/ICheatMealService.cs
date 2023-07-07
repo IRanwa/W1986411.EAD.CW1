@@ -40,5 +40,5 @@ public interface ICheatMealService
     /// </summary>
     /// <param name="planId">The plan identifier.</param>
     /// <returns>Returns remove status.</returns>
-    Task<APIResponse> RemoveCheatMealPlanAsync(int planId);
+    APIResponse RemoveCheatMealPlanAsync(int planId);
 }

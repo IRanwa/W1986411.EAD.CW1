@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using W1986411.EAD.Core;
 using W1986411.EAD.Model;
 using W1986411.EAD.Service;
 
@@ -43,6 +44,7 @@ public class UserController : ControllerBase
         }
         catch(Exception ex)
         {
+            ex.GetAllMessages();
             return BadRequest();
         }
         
@@ -63,6 +65,7 @@ public class UserController : ControllerBase
         }
         catch (Exception ex)
         {
+            ex.GetAllMessages();
             return BadRequest();
         }
     }

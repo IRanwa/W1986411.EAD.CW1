@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using W1986411.EAD.Core;
 using W1986411.EAD.Model;
 using W1986411.EAD.Service;
 
@@ -10,6 +12,7 @@ namespace W1986411.EAD.UI;
 /// <seealso cref="ControllerBase" />
 [Route("api/v1/user-fitness")]
 [ApiController]
+[Authorize]
 public class UserFitnessController : ControllerBase
 {
     /// <summary>
@@ -41,6 +44,7 @@ public class UserFitnessController : ControllerBase
             return Ok(response);
         }catch(Exception ex)
         {
+            ex.GetAllMessages();
             return BadRequest();
         }
     }
@@ -61,6 +65,7 @@ public class UserFitnessController : ControllerBase
         }
         catch (Exception ex)
         {
+            ex.GetAllMessages();
             return BadRequest();
         }
     }
@@ -80,6 +85,28 @@ public class UserFitnessController : ControllerBase
         }
         catch (Exception ex)
         {
+            ex.GetAllMessages();
+            return BadRequest();
+        }
+    }
+
+    /// <summary>
+    /// Removes the fitness details asynchronous.
+    /// </summary>
+    /// <param name="model">The model.</param>
+    /// <returns>Returns response.</returns>
+    [HttpPost]
+    [Route("delete")]
+    public async Task<IActionResult> RemoveFitnessDetailsAsync(FitnessDetailsFilterModel model)
+    {
+        try
+        {
+            var response = await service.RemoveFitnessDetailsAsync(model);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            ex.GetAllMessages();
             return BadRequest();
         }
     }

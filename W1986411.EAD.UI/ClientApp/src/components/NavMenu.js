@@ -41,10 +41,6 @@ class NavMenu extends Component {
             this.setState({
                 selectedMenu: 'cheatmeal'
             })
-        } else if (window.location.pathname === "/fitness") {
-            this.setState({
-                selectedMenu: 'fitness'
-            })
         }
 
         var token = localStorage.getItem("token");
@@ -74,9 +70,8 @@ class NavMenu extends Component {
             this.props.navigate('/workout-plans');
         } else if (value.key === "cheatmeal") {
             this.props.navigate('/cheatmeal-plans');
-        } else if (value.key === "fitness") {
-            this.props.navigate('/fitness');
         }
+
         this.setState({
             selectedMenu: value.key
         })
@@ -137,13 +132,7 @@ class NavMenu extends Component {
                                 icon: < IoFastFood />,
                                 label: 'Cheat Meal Plans',
                                 title: '',
-                            },
-                            {
-                                key: 'fitness',
-                                icon: < IoBody />,
-                                label: 'Fitness Details',
-                                title: '',
-                            },
+                            }
                         ]}
                         selectedKeys={[this.state.selectedMenu]}
                     />

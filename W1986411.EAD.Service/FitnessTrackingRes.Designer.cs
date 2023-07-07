@@ -124,6 +124,24 @@ namespace W1986411.EAD.Service {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to User fitness details remove failed..
+        /// </summary>
+        internal static string Message_FitnessInfoRemoveFailed {
+            get {
+                return ResourceManager.GetString("Message_FitnessInfoRemoveFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User fitness details remove success..
+        /// </summary>
+        internal static string Message_FitnessInfoRemoveSuccess {
+            get {
+                return ResourceManager.GetString("Message_FitnessInfoRemoveSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login user credentials invalid..
         /// </summary>
         internal static string Message_UserLoginCredentialsInvalid {
@@ -151,7 +169,7 @@ namespace W1986411.EAD.Service {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User weight record updated..
+        ///   Looks up a localized string similar to User fitness details record updated..
         /// </summary>
         internal static string Message_UserWeightRecordUpdated {
             get {

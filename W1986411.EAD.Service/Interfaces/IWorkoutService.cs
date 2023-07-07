@@ -40,5 +40,5 @@ public interface IWorkoutService
     /// </summary>
     /// <param name="planId">The plan identifier.</param>
     /// <returns>Returns delete status.</returns>
-    Task<APIResponse> RemoveWorkoutPlanAsync(int planId);
+    APIResponse RemoveWorkoutPlanAsync(int planId);
 }

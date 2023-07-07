@@ -67,7 +67,7 @@ public class CheatMealService : ICheatMealService
         }
         catch (Exception ex)
         {
-
+            ex.GetAllMessages();
         }
         return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_CheatMealPlanCreatedFailed };
     }
@@ -84,7 +84,8 @@ public class CheatMealService : ICheatMealService
             var cheatMealPlan = mapper.Map<CheatMealPlan>(model);
             unitOfWork.GetGenericRepository<CheatMealPlan>().Update(cheatMealPlan);
             var foods = unitOfWork.GetGenericRepository<CheatMealPlanFood>()
-                .GetQueryable(food => food.PlanId == model.Id, null).ToList();
+                .GetQueryable(food => food.PlanId == model.Id && 
+                food.CheatMealPlan.UserId == principal.Identity.Name, null).ToList();
             foreach (var food in foods)
                 food.IsActive = false;
             foreach (var food in model.Foods)
@@ -98,7 +99,7 @@ public class CheatMealService : ICheatMealService
         }
         catch (Exception ex)
         {
-
+            ex.GetAllMessages();
         }
         return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_CheatMealPlanUpdatedFailed };
     }
@@ -110,7 +111,7 @@ public class CheatMealService : ICheatMealService
     public APIResponse GetCheatMealPlans()
     {
         var cheatMealPlans = unitOfWork.GetGenericRepository<CheatMealPlan>()
-            .GetQueryable(plan => plan.IsActive, null)
+            .GetQueryable(plan => plan.IsActive && plan.UserId == principal.Identity.Name, null)
             .Include(plan => plan.CheatMealPlanFoods)
             .ToList();
         foreach (var plan in cheatMealPlans)
@@ -126,7 +127,7 @@ public class CheatMealService : ICheatMealService
     public APIResponse GetCheatMealPlanAsync(int planId)
     {
         var cheatMealPlan = unitOfWork.GetGenericRepository<CheatMealPlan>()
-            .GetQueryable(plan => plan.Id == planId, null)
+            .GetQueryable(plan => plan.Id == planId && plan.UserId == principal.Identity.Name, null)
             .Include(plan => plan.CheatMealPlanFoods)
             .FirstOrDefault();
         if (cheatMealPlan == null)
@@ -140,10 +141,10 @@ public class CheatMealService : ICheatMealService
     /// </summary>
     /// <param name="planId">The plan identifier.</param>
     /// <returns>Returns remove status.</returns>
-    public async Task<APIResponse> RemoveCheatMealPlanAsync(int planId)
+    public APIResponse RemoveCheatMealPlanAsync(int planId)
     {
         var cheatMealPlan = unitOfWork.GetGenericRepository<CheatMealPlan>()
-            .GetQueryable(plan => plan.Id == planId, null)
+            .GetQueryable(plan => plan.Id == planId && plan.UserId == principal.Identity.Name, null)
             .Include(plan => plan.CheatMealPlanFoods)
             .FirstOrDefault();
         if (cheatMealPlan == null)

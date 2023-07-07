@@ -37,6 +37,11 @@ public class UserFitnessDetail : EntityBase
     public DateTime RecordDate { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether this instance is active.
+    /// </summary>
+    public bool IsActive { get; set; }
+
+    /// <summary>
     /// Gets or sets the application user.
     /// </summary>
     [ForeignKey(nameof(UserId))]

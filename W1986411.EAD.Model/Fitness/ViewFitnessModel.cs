@@ -41,4 +41,24 @@ public class ViewFitnessModel
     /// Gets or sets the calories gain.
     /// </summary>
     public double CaloriesGain { get; set; }
+
+    /// <summary>
+    /// Gets or sets the pred calories burn.
+    /// </summary>
+    public double PredCaloriesBurn { get; set; }
+
+    /// <summary>
+    /// Gets or sets the pred calories gain.
+    /// </summary>
+    public double PredCaloriesGain { get; set; }
+
+    /// <summary>
+    /// Gets or sets the pred fitness status string.
+    /// </summary>
+    public string PredFitnessStatusStr { get; set; }
+
+    /// <summary>
+    /// Gets or sets the pred weight.
+    /// </summary>
+    public string PredWeight { get; set; }
 }

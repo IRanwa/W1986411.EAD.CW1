@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using W1986411.EAD.Core;
 using W1986411.EAD.Model;
 using W1986411.EAD.Service;
 
@@ -10,6 +12,7 @@ namespace W1986411.EAD.UI;
 /// <seealso cref="ControllerBase" />
 [Route("api/v1/cheatmeal")]
 [ApiController]
+[Authorize]
 public class CheatMealController : ControllerBase
 {
     /// <summary>
@@ -41,7 +44,8 @@ public class CheatMealController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex);
+            ex.GetAllMessages();
+            return BadRequest();
         }
     }
 
@@ -60,7 +64,8 @@ public class CheatMealController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex);
+            ex.GetAllMessages();
+            return BadRequest();
         }
     }
 
@@ -80,7 +85,8 @@ public class CheatMealController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex);
+            ex.GetAllMessages();
+            return BadRequest();
         }
     }
 
@@ -91,16 +97,17 @@ public class CheatMealController : ControllerBase
     /// <returns>Return response.</returns>
     [HttpPost]
     [Route("remove/{planId}")]
-    public async Task<IActionResult> RemoveCheatMealPlanAsync(int planId)
+    public IActionResult RemoveCheatMealPlanAsync(int planId)
     {
         try
         {
-            var response = await service.RemoveCheatMealPlanAsync(planId);
+            var response = service.RemoveCheatMealPlanAsync(planId);
             return Ok(response);
         }
         catch (Exception ex)
         {
-            return BadRequest(ex);
+            ex.GetAllMessages();
+            return BadRequest();
         }
     }
 
@@ -120,7 +127,8 @@ public class CheatMealController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(ex);
+            ex.GetAllMessages();
+            return BadRequest();
         }
     }
 }

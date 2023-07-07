@@ -181,7 +181,7 @@ class LoginRegistration extends Component {
                     this.setState({
                         screenLoading: false
                     }, () => {
-                        this.props.navigate('/workout-plans');
+                        this.props.navigate('/dashboard');
                     })
 
                 } else {

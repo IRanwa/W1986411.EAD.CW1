@@ -28,4 +28,11 @@ public interface IUserFitnessService
     /// <param name="model">The model.</param>
     /// <returns>Returns list of records.</returns>
     APIResponse GetFitnessDetailsForPeriodAsync(FitnessDetailsFilterModel model);
+
+    /// <summary>
+    /// Removes the fitness details asynchronous.
+    /// </summary>
+    /// <param name="model">The model.</param>
+    /// <returns>Returns response.</returns>
+    Task<APIResponse> RemoveFitnessDetailsAsync(FitnessDetailsFilterModel model);
 }

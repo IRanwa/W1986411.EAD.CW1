@@ -43,6 +43,7 @@ public static class DBConfiguration
 
         var workoutService = provider.GetRequiredService<IWorkoutService>();
         var cheatMealService = provider.GetRequiredService<ICheatMealService>();
+        var userFitnessService = provider.GetRequiredService<IUserFitnessService>();
 
         //Create Workout Plans
         workoutService.InsertWorkoutPlanAsync(new InsertUpdateWorkoutModel()
@@ -140,6 +141,36 @@ public static class DBConfiguration
                     Name = "Meal 2 - Food 1"
                 }
             }
+        });
+
+        //Add User fitness details
+        userFitnessService.InsertUpdateWeightAsync(new InsertUpdateFitnessModel()
+        {
+            FitnessStatus = FitnessStatus.Fair,
+            IsActive = true,
+            RecordDate = new DateTime(2023, 07, 01),
+            Weight = 60
+        });
+        userFitnessService.InsertUpdateWeightAsync(new InsertUpdateFitnessModel()
+        {
+            FitnessStatus = FitnessStatus.Good,
+            IsActive = true,
+            RecordDate = new DateTime(2023, 07, 02),
+            Weight = 59
+        });
+        userFitnessService.InsertUpdateWeightAsync(new InsertUpdateFitnessModel()
+        {
+            FitnessStatus = FitnessStatus.VeryPoor,
+            IsActive = true,
+            RecordDate = new DateTime(2023, 07, 03),
+            Weight = 58
+        });
+        userFitnessService.InsertUpdateWeightAsync(new InsertUpdateFitnessModel()
+        {
+            FitnessStatus = FitnessStatus.Poor,
+            IsActive = true,
+            RecordDate = new DateTime(2023, 07, 04),
+            Weight = 60
         });
     }
 }

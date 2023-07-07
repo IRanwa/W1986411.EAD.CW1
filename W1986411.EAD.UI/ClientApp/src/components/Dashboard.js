@@ -72,13 +72,19 @@ class Dashboard extends Component {
             new Date(data.recordDate).getMonth().toString() == currentDate.getMonth().toString() &&
             new Date(data.recordDate).getDate().toString() == currentDate.getDate().toString());
         if (fitnessData != undefined) {
-            console.log("fitnessData ", fitnessData)
             return (
                 <div align="left">
                     {
                         fitnessData.caloriesBurn != "0" ? (
                             <div>
                                 <Badge className="form-label" status="success" text={"Calories Burn : " + fitnessData.caloriesBurn} />
+                            </div>
+                        ) : ("")
+                    }
+                    {
+                        fitnessData.predCaloriesBurn != "0" ? (
+                            <div>
+                                <Badge className="form-label" status="processing" text={"Calories Burn : " + fitnessData.predCaloriesBurn} />
                             </div>
                         ) : ("")
                     }
@@ -91,16 +97,32 @@ class Dashboard extends Component {
                         ) : ("")
                     }
                     {
+                        fitnessData.predCaloriesGain != "0" ? (
+                            <div>
+                                <Badge className="form-label" status="processing" text={"Calories Gain  : " + fitnessData.predCaloriesGain} />
+                            </div>
+                        ) : ("")
+                    }
+
+                    {
                         fitnessData.weight != "0" ? (
                             <div>
                                 <Badge className="form-label" status="success" text={"Weight : " + fitnessData.weight + " kg"} />
                             </div>
                         ):("")
                     }
+
                     {
                         fitnessData.fitnessStatusStr != "" && fitnessData.fitnessStatusStr  != null? (
                             <div>
                                 <Badge className="form-label" status="success" text={"Fitness Status : " + fitnessData.fitnessStatusStr} />
+                            </div>
+                        ) : ("")
+                    }
+                    {
+                        fitnessData.predFitnessStatusStr != "" && fitnessData.predFitnessStatusStr != null ? (
+                            <div>
+                                <Badge className="form-label" status="processing" text={"Fitness Status : " + fitnessData.predFitnessStatusStr} />
                             </div>
                         ) : ("")
                     }
@@ -161,7 +183,6 @@ class Dashboard extends Component {
     }
 
     setFitnessStatus = (value) => {
-        console.log("this.state.value ", value)
         this.setState({
             fitnessStatus: value
         })
@@ -171,11 +192,11 @@ class Dashboard extends Component {
         this.setState({
             screenLoading: true
         });
-        console.log("this.state.fitnessStatus ", this.state.fitnessStatus)
         let data = {
             weight: this.state.fitnessWeight,
             fitnessStatus: this.state.fitnessStatus,
             recordDate: this.state.fitnessSelectedDate,
+            isActive: true
         };
         CommonPost("/api/v1/user-fitness", null, data)
             .then(res => {
@@ -202,13 +223,46 @@ class Dashboard extends Component {
             })
     }
 
+    removeFitnessDetail = () => {
+        this.setState({
+            screenLoading: true
+        });
+        let data = {
+            recordDate: this.state.fitnessSelectedDate,
+        };
+        CommonPost("/api/v1/user-fitness/delete", null, data)
+            .then(res => {
+                console.log("res ", res)
+                if (res.isSuccess) {
+                    openNotification(NotificationStatusTypes.Success, res.message);
+                } else {
+                    openNotification(NotificationStatusTypes.Error, res.message);
+                }
+                this.setState({
+                    screenLoading: false,
+                    fitnessModelOpen: false,
+                    fitnessSelectedDate: new Date(),
+                    fitnessId: null,
+                    fitnessWeight: 0,
+                    fitnessStatus: FitnessStatusTypes.Fair
+                });
+                this.getFitnessDetailsForPeriod();
+            }).catch(err => {
+                console.log("err ",err)
+                this.setState({
+                    screenLoading: false
+                });
+                openNotification(NotificationStatusTypes.Error, "Fitness details remove error occurred.");
+            })
+    }
+
     renderFitnessDetailsPopupModal = () => {
         let footerBtns = [
             <Button key="1" className="btn-cancel-custom-2" onClick={() => this.fitnessDetailsModel(false)}>Cancel</Button>
         ];
         if (this.state.fitnessId > 0) {
             footerBtns.push(<Button key="2" className="btn-custom-3" onClick={() => this.addUpdateFitnessDetails()}>Edit</Button>);
-            footerBtns.push(<Button key="3" className="btn-custom-2" onClick={() => this.updateFitnessDetail()}>Remove</Button>);
+            footerBtns.push(<Button key="3" className="btn-custom-2" onClick={() => this.removeFitnessDetail()}>Remove</Button>);
         } else {
             footerBtns.push(<Button key="4" className="btn-custom-2" onClick={() => this.addUpdateFitnessDetails()}>Add</Button>);
         }
@@ -252,6 +306,7 @@ class Dashboard extends Component {
                         value={dayjs(this.state.fitnessSelectedDate)}
                         onChange={this.setFitnessDetailDate}
                         className="w-100"
+                        disabledDate={d => !d || d.isAfter(new Date())}
                     />
                 </div>
                 <Divider />
@@ -299,7 +354,11 @@ class Dashboard extends Component {
                                 <Button className="btn-custom-2" onClick={() => this.fitnessDetailsModel(true)}>Update Fitness Details</Button>
                             </div>
                             <div>
-                                <Calendar fullscreen={false} onPanelChange={this.onPanelChange} cellRender={this.cellRender} />;
+                                <div>
+                                    <span className="m-2"><Badge className="form-label" status="success" text={"Actual"} /></span>
+                                    <span className="m-2"><Badge className="form-label" status="processing" text={"Prediction"} /></span>
+                                </div>
+                                <Calendar className="dashboard-calendar" fullscreen={false} onPanelChange={this.onPanelChange} cellRender={this.cellRender} />;
                             </div>
                         </Card>
                     </div>

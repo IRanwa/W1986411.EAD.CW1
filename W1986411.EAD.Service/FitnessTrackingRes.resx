@@ -138,6 +138,12 @@
   <data name="Message_CheatMealPlanUpdatedSuccess" xml:space="preserve">
     <value>Cheat meal plan update successful.</value>
   </data>
+  <data name="Message_FitnessInfoRemoveFailed" xml:space="preserve">
+    <value>User fitness details remove failed.</value>
+  </data>
+  <data name="Message_FitnessInfoRemoveSuccess" xml:space="preserve">
+    <value>User fitness details remove success.</value>
+  </data>
   <data name="Message_UserLoginCredentialsInvalid" xml:space="preserve">
     <value>Login user credentials invalid.</value>
   </data>
@@ -148,7 +154,7 @@
     <value>User registration successful.</value>
   </data>
   <data name="Message_UserWeightRecordUpdated" xml:space="preserve">
-    <value>User weight record updated.</value>
+    <value>User fitness details record updated.</value>
   </data>
   <data name="Message_WorkoutPlanCreatedFailed" xml:space="preserve">
     <value>Workout plan creation failed.</value>

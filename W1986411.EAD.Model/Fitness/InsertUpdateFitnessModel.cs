@@ -21,4 +21,9 @@ public class InsertUpdateFitnessModel
     /// Gets or sets the record date.
     /// </summary>
     public DateTime RecordDate { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this instance is active.
+    /// </summary>
+    public bool IsActive { get; set; }
 }

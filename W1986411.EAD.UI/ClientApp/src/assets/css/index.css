@@ -634,3 +634,7 @@ body {
     background-color: var(--light-blue-2);
     color: var(--white) !important;
 }
+
+.dashboard-calendar .ant-radio-group {
+    display: none !important;
+}

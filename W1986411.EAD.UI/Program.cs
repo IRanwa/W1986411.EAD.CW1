@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Security.Principal;
 using System.Text;
 using W1986411.EAD.Data;
@@ -15,8 +16,64 @@ var services = builder.Services;
 var Configuration = builder.Configuration;
 // Add services to the container.
 
+//Service classes dependency inject
+var businessProjectClasses = typeof(IUserService).Assembly.GetTypes()
+             .Where(service => service.Name.EndsWith("Service")).ToList();
+var interfaces = businessProjectClasses.Where(x => x.IsInterface);
+var serviceClasses = businessProjectClasses.Where(x => !x.IsInterface);
+foreach (var serviceClass in serviceClasses)
+{
+    var interfaceClass = interfaces.Where(x => x.Name.Equals($"I{serviceClass.Name}")).FirstOrDefault();
+    if (interfaceClass != null)
+        services.AddTransient(interfaceClass, serviceClass);
+}
+services.AddTransient<IUnitOfWork, UnitOfWork>();
+services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+
+//Auto mapper
+var mapper = new MapperConfiguration(cfg =>
+{
+    cfg.AddProfile(new UserProfile());
+    cfg.AddProfile(new WorkoutProfile());
+    cfg.AddProfile(new CheatMealProfile());
+    cfg.AddProfile(new FitnessProfile());
+});
+services.AddSingleton(mapper.CreateMapper());
+
+//Swagger
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fitness Tracking", Version = "v1" });
+    var securityScheme = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "JWT Bearer token using the Bearer scheme. Example: \"Bearer {token}\"",
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+    };
+    c.AddSecurityDefinition("Bearer", securityScheme);
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
 services.AddControllersWithViews();
 
+//DB Context
 services.AddDbContext<APIDBContext>(options =>
 {
     options.UseInMemoryDatabase("fitnesstrackingdb");
@@ -25,6 +82,7 @@ services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<APIDBContext>()
     .AddDefaultTokenProviders();
 
+//Authentication
 services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,36 +113,16 @@ services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 1;
 });
 
-
-//Service classes dependency inject
-var businessProjectClasses = typeof(IUserService).Assembly.GetTypes()
-             .Where(service => service.Name.EndsWith("Service")).ToList();
-var interfaces = businessProjectClasses.Where(x => x.IsInterface);
-var serviceClasses = businessProjectClasses.Where(x => !x.IsInterface);
-foreach (var serviceClass in serviceClasses)
-{
-    var interfaceClass = interfaces.Where(x => x.Name.Equals($"I{serviceClass.Name}")).FirstOrDefault();
-    if (interfaceClass != null)
-        services.AddTransient(interfaceClass, serviceClass);
-}
-services.AddTransient<IUnitOfWork, UnitOfWork>();
-services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
-
-//Auto mapper
-var mapper = new MapperConfiguration(cfg =>
-{
-    cfg.AddProfile(new UserProfile());
-    cfg.AddProfile(new WorkoutProfile());
-    cfg.AddProfile(new CheatMealProfile());
-    cfg.AddProfile(new FitnessProfile());
-});
-services.AddSingleton(mapper.CreateMapper());
-
-//Swagger
-services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fitness Tracking", Version = "v1" });
-});
+//Logs
+Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.File(
+                    "logs/fitness_tracking_.txt",
+                    outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] {Message:lj}{NewLine}{Exception}",
+                    rollingInterval: RollingInterval.Day
+                )
+                .CreateLogger();
+Log.Information("started");
 
 //Seed Data
 DBConfiguration.SeedData(services.BuildServiceProvider());
@@ -97,6 +135,11 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fitness Tracking API V1");
+});
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -110,11 +153,5 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
-
-app.UseSwagger();
-app.UseSwaggerUI(c =>
-{
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fitness Tracking API V1");
-});
 
 app.Run();
