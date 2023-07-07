@@ -56,6 +56,7 @@ class CheatMealPlan extends Component {
         this.setState({
             planName: e.target.value
         })
+        $("#planName-err").text("");
     }
 
     setOccurrence = (value) => {
@@ -82,12 +83,14 @@ class CheatMealPlan extends Component {
         this.setState({
             cheatMealFoodName: e.target.value
         })
+        $("#cheatMealFoodName-err").text("");
     }
 
     setCaloriesGain = (value) => {
         this.setState({
             caloriesGain: value
         })
+        $("#caloriesGain-err").text("");
     }
 
     popupCheatMealPlanRender = () => {

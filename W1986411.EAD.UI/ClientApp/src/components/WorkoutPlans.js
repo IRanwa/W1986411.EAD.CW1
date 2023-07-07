@@ -60,6 +60,7 @@ class WorkoutPlan extends Component {
         this.setState({
             planName: e.target.value
         })
+        $("#planName-err").text("");
     }
 
     setOccurrence = (value) => {
@@ -86,24 +87,28 @@ class WorkoutPlan extends Component {
         this.setState({
             workoutName: e.target.value
         })
+        $("#workoutName-err").text("");
     }
 
     setWorkoutSets = (value) => {
         this.setState({
             workoutSets: value
         })
+        $("#workoutSets-err").text("");
     }
 
     setWorkoutReps = (value) => {
         this.setState({
             workoutReps: value
         })
+        $("#workoutReps-err").text("");
     }
 
     setCaloriesBurn = (value) => {
         this.setState({
             caloriesBurn: value
         })
+        $("#caloriesBurn-err").text("");
     }
 
     popupWorkoutPlanRender = () => {
