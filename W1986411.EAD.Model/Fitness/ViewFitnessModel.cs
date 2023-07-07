@@ -60,5 +60,5 @@ public class ViewFitnessModel
     /// <summary>
     /// Gets or sets the pred weight.
     /// </summary>
-    public string PredWeight { get; set; }
+    public double PredWeight { get; set; }
 }

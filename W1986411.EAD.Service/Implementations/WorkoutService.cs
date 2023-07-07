@@ -62,7 +62,7 @@ public class WorkoutService : IWorkoutService
                 workoutRoutine.PlanId = workoutPlan.Id;
                 await unitOfWork.GetGenericRepository<WorkoutPlanRoutine>().Add(workoutRoutine);
             }
-            unitOfWork.SaveChanges();
+            unitOfWork.SaveChanges(principal);
             return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_WorkoutPlanCreatedSuccess };
         }
         catch (Exception ex)
@@ -94,7 +94,7 @@ public class WorkoutService : IWorkoutService
                 workoutRoutine.PlanId = workoutPlan.Id;
                 await unitOfWork.GetGenericRepository<WorkoutPlanRoutine>().Add(workoutRoutine);
             }
-            unitOfWork.SaveChanges();
+            unitOfWork.SaveChanges(principal);
             return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_WorkoutPlanUpdatedSuccess };
         }
         catch (Exception ex)
@@ -156,7 +156,7 @@ public class WorkoutService : IWorkoutService
         foreach (var routine in workoutPlan.WorkoutPlanRoutines)
             routine.IsActive = false;
         workoutPlan.IsActive = false;
-        unitOfWork.SaveChanges();
+        unitOfWork.SaveChanges(principal);
         return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_WorkoutPlanRemoveSuccess };
     }
 }

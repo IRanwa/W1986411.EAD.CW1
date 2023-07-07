@@ -1,4 +1,6 @@
-﻿namespace W1986411.EAD.Data;
+﻿using System.Security.Principal;
+
+namespace W1986411.EAD.Data;
 
 /// <summary>
 /// Unit of work.
@@ -16,7 +18,7 @@ public interface IUnitOfWork
     /// Saves the changes.
     /// </summary>
     /// <returns>Returns saved count.</returns>
-    int SaveChanges();
+    int SaveChanges(IPrincipal user);
 
     /// <summary>
     /// Gets the database context.

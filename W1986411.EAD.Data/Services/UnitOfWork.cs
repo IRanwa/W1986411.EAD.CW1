@@ -20,19 +20,13 @@ public class UnitOfWork : IUnitOfWork
     private Dictionary<Type, object> repositoriesAsync;
 
     /// <summary>
-    /// The user
-    /// </summary>
-    private readonly IPrincipal user;
-
-    /// <summary>
     /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
     /// </summary>
     /// <param name="context">The context.</param>
     /// <param name="user">The user.</param>
-    public UnitOfWork(APIDBContext context, IPrincipal user)
+    public UnitOfWork(APIDBContext context)
     {
         this.context = context;
-        this.user = user;
     }
 
     /// <summary>
@@ -54,7 +48,7 @@ public class UnitOfWork : IUnitOfWork
     /// Saves the changes.
     /// </summary>
     /// <returns>Returns saved count.</returns>
-    public int SaveChanges()
+    public int SaveChanges(IPrincipal user)
     {
         var addingEntries = context.ChangeTracker.Entries().Where(entry =>
             entry.Entity is EntityBase &&

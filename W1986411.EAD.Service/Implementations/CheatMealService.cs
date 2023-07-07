@@ -62,7 +62,7 @@ public class CheatMealService : ICheatMealService
                 cheatMealPlanFood.PlanId = cheatMealPlan.Id;
                 await unitOfWork.GetGenericRepository<CheatMealPlanFood>().Add(cheatMealPlanFood);
             }
-            unitOfWork.SaveChanges();
+            unitOfWork.SaveChanges(principal);
             return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_CheatMealPlanCreatedSuccess};
         }
         catch (Exception ex)
@@ -94,7 +94,7 @@ public class CheatMealService : ICheatMealService
                 cheatMealPlanFood.PlanId = cheatMealPlan.Id;
                 await unitOfWork.GetGenericRepository<CheatMealPlanFood>().Add(cheatMealPlanFood);
             }
-            unitOfWork.SaveChanges();
+            unitOfWork.SaveChanges(principal);
             return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_CheatMealPlanUpdatedSuccess };
         }
         catch (Exception ex)
@@ -153,7 +153,7 @@ public class CheatMealService : ICheatMealService
         foreach (var food in cheatMealPlan.CheatMealPlanFoods)
             food.IsActive = false;
         cheatMealPlan.IsActive = false;
-        unitOfWork.SaveChanges();
+        unitOfWork.SaveChanges(principal);
         return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_CheatMealPlanRemoveSuccess };
     }
 }

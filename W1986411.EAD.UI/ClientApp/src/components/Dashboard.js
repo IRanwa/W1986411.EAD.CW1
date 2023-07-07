@@ -6,6 +6,7 @@ import { CommonGet, CommonPost } from './Utils/CommonFetch';
 import FitnessStatusTypes from './Enums/FitnessStatusTypes';
 import { openNotification } from './Utils/CommonUI';
 import NotificationStatusTypes from './Enums/NotificationStatusTypes';
+import { CSVLink } from "react-csv";
 
 class Dashboard extends Component {
     constructor(props) {
@@ -110,6 +111,13 @@ class Dashboard extends Component {
                                 <Badge className="form-label" status="success" text={"Weight : " + fitnessData.weight + " kg"} />
                             </div>
                         ):("")
+                    }
+                    {
+                        fitnessData.predWeight != "0" ? (
+                            <div>
+                                <Badge className="form-label" status="processing" text={"Weight : " + fitnessData.predWeight + " kg"} />
+                            </div>
+                        ) : ("")
                     }
 
                     {
@@ -342,6 +350,18 @@ class Dashboard extends Component {
     }
 
     render() {
+        const fileHeaders = [
+            { label: '#', key: 'id' },
+            { label: 'Record date', key: 'recordDate' },
+            { label: 'Fitness Status', key: 'fitnessStatusStr' },
+            { label: 'Weight', key: 'weight' },
+            { label: 'Calories Burn', key: 'caloriesGain' },
+            { label: 'Calories Gain', key: 'caloriesBurn' },
+            { label: 'Fitness Status (Prediction)', key: 'predFitnessStatusStr' },
+            { label: 'Weight (Prediction)', key: 'predWeight' },
+            { label: 'Calories Burn (Prediction)', key: 'predCaloriesGain' },
+            { label: 'Calories Gain (Prediction)', key: 'predCaloriesBurn' }
+        ];
         return (
             <ScreenLoaderModal loading={this.state.screenLoading}>
                 {
@@ -358,6 +378,14 @@ class Dashboard extends Component {
                                     <span className="m-2"><Badge className="form-label" status="success" text={"Actual"} /></span>
                                     <span className="m-2"><Badge className="form-label" status="processing" text={"Prediction"} /></span>
                                 </div>
+                                <CSVLink
+                                    headers={fileHeaders}
+                                    filename={"Dashboard.csv"}
+                                    data={this.state.calendarFitnessData}
+                                    className="btn btn-custom-2"
+                                >
+                                    Export to CSV
+                                </CSVLink>
                                 <Calendar className="dashboard-calendar" fullscreen={false} onPanelChange={this.onPanelChange} cellRender={this.cellRender} />;
                             </div>
                         </Card>

@@ -75,7 +75,7 @@ public class UserFitnessService : IUserFitnessService
             fitnessRecord.FitnessStatus = model.FitnessStatus;
             fitnessRecord.IsActive = model.IsActive;
         }
-        unitOfWork.SaveChanges();
+        unitOfWork.SaveChanges(user);
         return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_UserWeightRecordUpdated };
     }
 
@@ -95,7 +95,7 @@ public class UserFitnessService : IUserFitnessService
         if (fitnessRecord == null)
             return new APIResponse() { IsSuccess = false, Message = FitnessTrackingRes.Message_FitnessInfoRemoveFailed};
         fitnessRecord.IsActive = false;
-        unitOfWork.SaveChanges();
+        unitOfWork.SaveChanges(user);
         return new APIResponse() { IsSuccess = true, Message = FitnessTrackingRes.Message_FitnessInfoRemoveSuccess };
     }
 
@@ -409,12 +409,14 @@ public class UserFitnessService : IUserFitnessService
                 continue;
             }
             var predUserFitness = GetFitnessPrediction(fitnessWeekDataList);
+            var predWeight = GetPredictedWeight(fitnessWeekDataList);
             userFitnessDetails.Add(new UserFitnessDetail()
             {
                 RecordDate = startDate,
                 IsActive = true,
                 UserId = user.Identity.Name,
-                FitnessStatus = predUserFitness
+                FitnessStatus = predUserFitness,
+                Weight = predWeight
             });
             var fitnessDetail = fitnessDetails.FirstOrDefault(x =>
                     x.RecordDate.Year == startDate.Year &&
@@ -426,6 +428,7 @@ public class UserFitnessService : IUserFitnessService
                 fitnessDetails.Add(fitnessDetail);
             }
             fitnessDetail.PredFitnessStatusStr = predUserFitness.GetEnumDisplayName();
+            fitnessDetail.PredWeight = predWeight;
             startDate = startDate.AddDays(1);
         } while (startDate.ToShortDateString() != endDate.ToShortDateString());
     }
@@ -475,5 +478,18 @@ public class UserFitnessService : IUserFitnessService
             return FitnessStatus.Excellent;
         else
             return FitnessStatus.Superior;
+    }
+
+    /// <summary>
+    /// Gets the predicted weight.
+    /// </summary>
+    /// <param name="fitnessWeekDataList">The fitness week data list.</param>
+    /// <returns>Returns predicted weight.</returns>
+    private double GetPredictedWeight(IEnumerable<UserFitnessDetail> fitnessWeekDataList)
+    {
+        var weight = 0.0;
+        foreach (var fitnessWeekData in fitnessWeekDataList)
+            weight += fitnessWeekData.Weight;
+        return Math.Round(weight / fitnessWeekDataList.Count(),2);
     }
 }

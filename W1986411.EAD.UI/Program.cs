@@ -27,8 +27,9 @@ foreach (var serviceClass in serviceClasses)
     if (interfaceClass != null)
         services.AddTransient(interfaceClass, serviceClass);
 }
-services.AddTransient<IUnitOfWork, UnitOfWork>();
+
 services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
+services.AddTransient<IUnitOfWork, UnitOfWork>();
 
 //Auto mapper
 var mapper = new MapperConfiguration(cfg =>
