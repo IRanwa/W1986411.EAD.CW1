@@ -75,10 +75,9 @@ services.AddSwaggerGen(c =>
 services.AddControllersWithViews();
 
 //DB Context
-services.AddDbContext<APIDBContext>(options =>
-{
-    options.UseInMemoryDatabase("fitnesstrackingdb");
-});
+var connectionString = Configuration.GetConnectionString("DefaultConnection");
+services.AddDbContext<APIDBContext>(options => options.UseSqlServer(connectionString));
+
 services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<APIDBContext>()
     .AddDefaultTokenProviders();
@@ -125,10 +124,24 @@ Log.Logger = new LoggerConfiguration()
                 .CreateLogger();
 Log.Information("started");
 
-//Seed Data
-DBConfiguration.SeedData(services.BuildServiceProvider());
-
 var app = builder.Build();
+
+try
+{
+    //Migrate when application starts.
+    using (var scope = app.Services.CreateScope())
+    {
+        var dataContext = scope.ServiceProvider.GetRequiredService<APIDBContext>();
+        dataContext.Database.Migrate();
+    }
+}
+catch (Exception ex)
+{
+    Log.Error("Database migration error : ", ex);
+}
+
+//Seed Data
+//DBConfiguration.SeedData(services.BuildServiceProvider());
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
